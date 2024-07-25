@@ -27,8 +27,8 @@ export default function SignUp() {
     }
     try {
       const res = await createUserWithEmailAndPassword(email, password)
-      // console.log(res?.user.accessToken)
-       const token = res?.user?.accessToken
+      // console.log(res?.user.uid)
+       const token = res?.user?.uid
       if(token){
          setEmail('')
       setPassword('')
