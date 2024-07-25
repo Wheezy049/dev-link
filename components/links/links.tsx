@@ -1,6 +1,30 @@
 import SkeletonSideBar from "../skeletonSideBar/skeletonSiseBar";
+import AddLinkForm from "../addLinkForm/addLinkForm";
+import { useState } from "react";
+
+type Link = {
+  platform: string;
+  url: string;
+};
 
 export default function Links() {
+  const [linkForms, setLinkForms] = useState<number[]>([1])
+  const [links, setLinks] = useState<Link[]>([]);
+  const [showForm ,setShowForm] = useState(false)
+
+  const handleAddLink = (platform: string, url: string) => {
+    setLinks((prevLinks) => [...prevLinks, { platform, url }]);
+    setShowForm(false)
+    // Handle link addition logic here
+    // setShowForm(true);
+    // console.log(`Platform: ${platform}, URL: ${url}`);
+  };
+
+  const handleAddForm = () => {
+    setLinkForms((prevForms) => [...prevForms, prevForms.length + 1]);
+    setShowForm(true)
+  };
+
   return (
     <div>
       <div className="flex justify-center items-center m-6 gap-6">
@@ -14,12 +38,13 @@ export default function Links() {
               Add/edit/remove links below and then share all your profiles with
               the world!
             </p>
-            <div className="bg-white h-11 w-full px-7 py-3 border border-[#633CFF] rounded-lg flex justify-center mb-6">
-              <p className="text-base font-semibold text-[#633CFF]">
+            <div>
+              <button onClick={handleAddForm} className="bg-white h-11 w-full text-base font-semibold text-[#633CFF] px-7 py-3 border border-[#633CFF] rounded-lg flex justify-center mb-6">
                 + Add new link
-              </p>
+              </button>
             </div>
-            <div className="w-full h-[469px] rounded-xl bg-[#FAFAFA] p-5">
+            { !showForm ? (
+              <div className="w-full h-[469px] rounded-xl bg-[#FAFAFA] p-5">
               <div className="flex flex-col gap-10">
                 <div className="flex justify-center items-center">
                   <svg
@@ -222,6 +247,17 @@ export default function Links() {
                 </div>
               </div>
             </div>
+            ):(
+              linkForms.map((number)=>(
+                <AddLinkForm
+          key={number}
+          number={number}
+          onAddLink={handleAddLink}
+        />
+              ) )
+            )}
+            
+            
           </div>
           <div className=" w-[343px] md:w-[721px] lg:w-[808px] h-[94px] flex justify-end items-center px-10 py-6 rounded-xl bg-white">
             <button className="px-7 py-3 text-base font-semibold text-white bg-[#633CFF] opacity-25 rounded-lg">
