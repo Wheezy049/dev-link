@@ -22,7 +22,7 @@ export default function SignUp() {
     e.preventDefault()
     if (password !== confirmPassword) {
       console.error('Passwords do not match');
-      setErrorMessage('password does not match')
+      setErrorMessage('Passwords do not match')
       return;
     }
     try {

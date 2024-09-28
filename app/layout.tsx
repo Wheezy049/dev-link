@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Inter } from "next/font/google";
 import "./globals.css";
+import Layout from "@/components/layout";
 
 const inter = Inter({ subsets: ["latin"] });
 const instrument_Sans = Instrument_Sans({ subsets: ["latin"] });
@@ -15,9 +16,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="en">
-      <body className={instrument_Sans.className}>{children}</body>
+      <body className={instrument_Sans.className}>
+        <Layout>
+          {children}
+        </Layout>
+      </body>
     </html>
   );
 }

@@ -1,67 +1,87 @@
 import { useState } from "react";
-type AddLinkFormProps = {
-  onAddLink: (platform: string, url: string) => void;
+
+interface AddLinkFormProps {
   number: number;
-};
+  onAddLink: (platform: string, url: string) => void;
+  onRemoveLink: (number: number) => void;
+}
 
-const socialMediaOptions = [
-  { value: "twitter", label: "Twitter" },
-  { value: "facebook", label: "Facebook" },
-  { value: "instagram", label: "Instagram" },
-  { value: "linkedin", label: "LinkedIn" },
-];
-
-export default function AddLinkForm({ onAddLink, number }: AddLinkFormProps) {
-  const [selectedPlatform, setSelectedPlatform] = useState("");
+const AddLinkForm = ({ number, onAddLink, onRemoveLink }: AddLinkFormProps) => {
+  const [platform, setPlatform] = useState("");
   const [url, setUrl] = useState("");
+  const [error, setError] = useState("");
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (selectedPlatform && url) {
-      onAddLink(selectedPlatform, url);
-      setSelectedPlatform("");
-      setUrl("");
+  const platformPatterns: Record<string, RegExp> = {
+    github: /^https:\/\/(www\.)?github\.com\/.+$/,
+    facebook: /^https:\/\/(www\.)?facebook\.com\/.+$/,
+    twitter: /^https:\/\/(www\.)?x\.com\/.+$/,
+    instagram: /^https:\/\/(www\.)?instagram\.com\/.+$/,
+    linkedin: /^https:\/\/(www\.)?linkedin\.com\/.+$/,
+    // Add more platforms as needed
+  };
+
+  const validateUrl = (platform: string, url: string): boolean => {
+    const pattern = platformPatterns[platform.toLowerCase()];
+    if (pattern) {
+      return pattern.test(url);
+    }
+    return false;
+  };
+
+  const handleAddLink = () => {
+    if (validateUrl(platform, url)) {
+      onAddLink(platform, url);
+      // setPlatform("");
+      // setUrl("");
+      // setError("");
+    } else {
+      setError("Invalid URL format for the selected platform");
     }
   };
+
   return (
-    <div>
-      <form onSubmit={handleFormSubmit} className="link-form">
-        <h3>Link #{number}</h3>
-        <div className="form-group">
-          <label htmlFor={`platform-${number}`}>Select Platform</label>
-          <select
-            id={`platform-${number}`}
-            value={selectedPlatform}
-            onChange={(e) => setSelectedPlatform(e.target.value)}
-            required
-            className="form-control"
-          >
-            <option value="" disabled>
-              Select a platform
-            </option>
-            {socialMediaOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor={`url-${number}`}>URL</label>
-          <input
-            type="url"
-            id={`url-${number}`}
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="Enter the URL"
-            required
-            className="form-control"
-          />
-        </div>
-        <button type="submit" className="submit-button">
-          Submit
+    <div className="bg-gray-300">
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="font-bold text-black">Link #{number}</h3>
+        <button onClick={() => onRemoveLink(number)} className="text-red-500">
+          Remove
         </button>
-      </form>
+      </div>
+      <label className="flex flex-col gap-1">
+        <span className="font-semibold text-black">Platform</span>
+        <select
+          value={platform}
+          onChange={(e) => setPlatform(e.target.value)}
+          className="border border-gray-300 text-black rounded-lg p-2"
+        >
+          <option value="">Select Platform</option>
+          <option value="github">GitHub</option>
+          <option value="facebook">Facebook</option>
+          <option value="twitter">Twitter</option>
+          <option value="instagram">Instagram</option>
+          <option value="linkedin">LinkedIn</option>
+          {/* Add more platforms as needed */}
+        </select>
+      </label>
+      <label className="flex flex-col gap-1">
+        <span className="font-semibold">Link</span>
+        <input
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder={`e.g. https://www.${platform.toLowerCase()}.com/yourprofile`}
+          className="border border-gray-300 text-black rounded-lg p-2"
+        />
+      </label>
+      {error && <span className="text-red-500">{error}</span>}
+      <button
+        onClick={handleAddLink}
+        className="bg-blue-500 text-white p-2 rounded-lg mt-2"
+      >
+        Add Link
+      </button>
     </div>
   );
-}
+};
+
+export default AddLinkForm;

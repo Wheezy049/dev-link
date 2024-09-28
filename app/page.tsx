@@ -1,11 +1,13 @@
 "use client"
 import useAuth   from '@/useAuth/useAuth';
-import Header from '../components/header/header'; 
-import Link from '../components/links/links';
+import { useState } from 'react';
+import Link, { Link as LinkType } from '../components/links/links';
 
 const Home: React.FC = () => {
 
   const { user, loading, isAuthenticated } = useAuth();
+
+  const [links, setLinks] = useState<LinkType[]>([]); 
 
   if (loading) {
     return <div>Loading...</div>;
@@ -16,10 +18,9 @@ const Home: React.FC = () => {
   }
 
   return (
-    <main>
-      <Header />
-      <Link />
-    </main>
+     <div>
+      <Link links={links} setLinks={setLinks}/>
+     </div>
   );
 };
 
