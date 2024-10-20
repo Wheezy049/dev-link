@@ -1,5 +1,5 @@
 "use client";
-import { auth } from "@/firebase/config";
+import { auth} from "@/firebase/config";
 import React, { useEffect, useRef, useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ export default function LogIn() {
     e.preventDefault();
     try {
       const res = await signInWithEmailAndPassword(email, password);
-      console.log(res);
+      console.log(res?.user);
       setEmail("");
       setPassword("");
       if (res) {

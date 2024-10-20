@@ -1,4 +1,5 @@
 "use client"
+import Layout from '@/components/layout';
 import Profile from '@/components/profile/profile'
 import React from 'react'
 import { useState } from 'react';
@@ -26,7 +27,9 @@ function Page() {
   
   return (
     <div>
+      <Layout>
       <Profile savedName={savedName} setSavedName={handleSetSavedName}/>
+      </Layout>
     </div>
   )
 }

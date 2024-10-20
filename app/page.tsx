@@ -2,6 +2,7 @@
 import useAuth   from '@/useAuth/useAuth';
 import { useState } from 'react';
 import Link, { Link as LinkType } from '../components/links/links';
+import Layout from '@/components/layout';
 
 const Home: React.FC = () => {
 
@@ -19,7 +20,9 @@ const Home: React.FC = () => {
 
   return (
      <div>
+      <Layout>
       <Link links={links} setLinks={setLinks}/>
+      </Layout>
      </div>
   );
 };

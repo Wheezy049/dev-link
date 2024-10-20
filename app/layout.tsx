@@ -21,9 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={instrument_Sans.className}>
-        <Layout>
+        {/* <Layout> */}
           {children}
-        </Layout>
+        {/* </Layout> */}
       </body>
     </html>
   );
