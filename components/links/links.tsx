@@ -57,7 +57,7 @@ export default function Links({
 
   return (
     <div>
-      <div className="flex justify-center items-center m-6 gap-6">
+      <div className=" flex justify-center items-center m-6 gap-6">
         {/* <SkeletonSideBar links={links}/> */}
         <div className="flex flex-col gap-1">
           <div className="w-[343px] md:w-[721px] lg:w-[808px] h-[739px] border-b border-b-[#D9D9D9] p-10 rounded-xl bg-white overflow-hidden">

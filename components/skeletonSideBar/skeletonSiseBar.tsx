@@ -6,17 +6,17 @@ export type Link = {
   userId: string;
 };
 
-// export type savedNameProps = {
-//   firstName: string;
-//   lastName: string;
-// };
-
 interface SkeletonSideBarProps {
   links: Link[];
   savedName: SavedNameProps;
+  image: string
 }
 
-export default function SkeletonSideBar({ links, savedName}: SkeletonSideBarProps) {
+export default function SkeletonSideBar({
+  links,
+  savedName,
+  image
+}: SkeletonSideBarProps) {
   console.log("SkeletonSideBar: savedName updated:", JSON.stringify(savedName));
   return (
     <div className="hidden lg:flex lg:flex-row justify-center items-center w-[560px] h-[834px] p-6 rounded-xl bg-white">
@@ -46,16 +46,35 @@ export default function SkeletonSideBar({ links, savedName}: SkeletonSideBarProp
             stroke="#737373"
           />
           <svg
-            x="95"
-            y="50"
-            xmlns="http://www.w3.org/2000/svg"
-            width="97"
-            height="150"
-            viewBox="0 0 97 150"
-            fill="none"
-          >
-            <circle cx="48.5" cy="48" r="48" fill="#EEEEEE" />
-          </svg>
+  x="95"
+  y="50"
+  xmlns="http://www.w3.org/2000/svg"
+  width="97"
+  height="150"
+  viewBox="0 0 97 150"
+  fill="none"
+>
+  {/* Circle background */}
+  <circle cx="48.5" cy="48" r="48" fill="#EEEEEE" />
+  
+  {/* Image inside the circle */}
+  <image
+    href={image}
+    x="0"
+    y="0"
+    width="97"
+    height="150"
+    clipPath="url(#circleClip)"
+  />
+  
+  {/* Define the circular clip path to make the image round */}
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="48.5" cy="48" r="48" />
+    </clipPath>
+  </defs>
+</svg>
+
           <svg
             x="30"
             y="50"
@@ -65,11 +84,21 @@ export default function SkeletonSideBar({ links, savedName}: SkeletonSideBarProp
             viewBox="0 0 100% 150"
             fill="none"
           >
-            <rect x="0" y="105" width="80%" height="25" rx="8" ry="8" fill="#EEEEEE" /> 
-            <text x="20" y="120" fill="#000" fontSize="10">{savedName.firstName}</text>
+            <rect
+              x="0"
+              y="105"
+              width="80%"
+              height="25"
+              rx="8"
+              ry="8"
+              fill="#EEEEEE"
+            />
+            <text x="40%" y="120" fill="#000" fontSize="16" textAnchor="middle">
+              {savedName.lastName} {savedName.firstName}
+            </text>
           </svg>
           <svg
-            x="70"
+            x="50"
             y="90"
             xmlns="http://www.w3.org/2000/svg"
             width="100%"
@@ -77,27 +106,37 @@ export default function SkeletonSideBar({ links, savedName}: SkeletonSideBarProp
             viewBox="0 0 100% 150"
             fill="none"
           >
-            <rect x="0" y="105" width="50%" height="25" rx="8" ry="8" fill="#EEEEEE" /> 
+            <rect
+              x="0"
+              y="105"
+              width="70%"
+              height="25"
+              rx="8"
+              ry="8"
+              fill="#EEEEEE"
+            />
+            <text x="30%" y="123" fill="#000" fontSize="16" textAnchor="middle">
+              {savedName.email}
+            </text>
           </svg>
 
-
           {Array.isArray(links) && links.length === 0 && (
-    <g transform="translate(20, 150)">
-      {Array.from({ length: 5 }).map((_, index) => (
-        <g key={index} transform={`translate(0, ${index * 64})`}>
-          <rect
-            x="0"
-            y="90"
-            width="85%"
-            height="44"
-            rx="8"
-            ry="8"
-            fill="#EEEEEE"
-          />
-        </g>
-      ))}
-    </g>
-  )}
+            <g transform="translate(20, 150)">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <g key={index} transform={`translate(0, ${index * 64})`}>
+                  <rect
+                    x="0"
+                    y="90"
+                    width="85%"
+                    height="44"
+                    rx="8"
+                    ry="8"
+                    fill="#EEEEEE"
+                  />
+                </g>
+              ))}
+            </g>
+          )}
           {Array.isArray(links) && links.length > 0 && (
             <g transform="translate(20, 150)">
               {links.map((link, index) => (
@@ -111,7 +150,7 @@ export default function SkeletonSideBar({ links, savedName}: SkeletonSideBarProp
                     ry="8"
                     fill="#1A1A1A"
                   />
-                  <text x="20" y="115" fontSize="11" fill="#FFF" >
+                  <text x="20" y="115" fontSize="11" fill="#FFF">
                     {link.platform}: {link.url}
                   </text>
                 </g>

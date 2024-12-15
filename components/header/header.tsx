@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const pathname = usePathname();
   return (
-    <div className="bg-white m-0 md:m-6 lg:m-0 px-6 py-4 flex justify-between mb-6 items-center">
+    <div className="bg-white w-full m-0 px-6 py-4 flex justify-between mb-6">
       <Link href={"/"} className="flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"

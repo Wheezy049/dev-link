@@ -19,7 +19,7 @@ const Home: React.FC = () => {
   }
 
   return (
-     <div>
+     <div className='max-w-[1200px] w-full flex mx-auto items-center justify-center '>
       <Layout>
       <Link links={links} setLinks={setLinks}/>
       </Layout>

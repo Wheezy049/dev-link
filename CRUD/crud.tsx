@@ -1,5 +1,5 @@
 import { db } from "@/firebase/config"; // Adjust the import to your firebase configuration
-import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, query, where } from "firebase/firestore";
+import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, query, setDoc, getDoc} from "firebase/firestore";
 
 
 export type Link = {
@@ -28,4 +28,16 @@ export const updateLink = async (id: string, userId: string, link: { platform: s
 export const deleteLink = async (id: string, userId: string) => {
   const docRef = doc(db, "users", userId, "links", id);
   await deleteDoc(docRef);
+};
+
+
+export const saveUserProfile = async (userId: string, profile: { firstName: string; lastName: string; email: string }) => {
+  const userDocRef = doc(db, "users", userId);
+  await setDoc(userDocRef, { ...profile }, { merge: true });
+};
+
+export const getUserProfile = async (userId: string) => {
+  const userDocRef = doc(db, "users", userId);
+  const userDocSnap = await getDoc(userDocRef);
+  return userDocSnap.exists() ? userDocSnap.data() : null;
 };
