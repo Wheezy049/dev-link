@@ -3,14 +3,7 @@ import { useAppContext } from "@/context/AppContext";
 import ProfileEditor from "@/components/ProfileEditor";
 
 export default function ProfilePage() {
-  const { profile, setProfile, image, setImage, loading } = useAppContext();
-
-  const handleSetSavedName = (name: { firstName: string; lastName: string; email: string }) => {
-    setProfile(prev => ({
-      ...prev,
-      ...name
-    }));
-  };
+  const { loading } = useAppContext();
 
   if (loading) {
     return (
@@ -20,12 +13,5 @@ export default function ProfilePage() {
     );
   }
 
-  return (
-    <ProfileEditor
-      savedName={profile}
-      setSavedName={handleSetSavedName}
-      image={image}
-      setImage={setImage}
-    />
-  );
+  return <ProfileEditor />;
 }

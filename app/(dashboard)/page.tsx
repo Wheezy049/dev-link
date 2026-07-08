@@ -3,7 +3,7 @@ import { useAppContext } from "@/context/AppContext";
 import LinksEditor from "@/components/LinksEditor";
 
 export default function Home() {
-  const { links, setLinks, loading } = useAppContext();
+  const { loading } = useAppContext();
 
   if (loading) {
     return (
@@ -13,5 +13,5 @@ export default function Home() {
     );
   }
 
-  return <LinksEditor links={links} setLinks={setLinks} />;
+  return <LinksEditor />;
 }

@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
 import { getLinks, getUserProfile, saveUserProfile, deleteLink, updateLink, createLink, Link, UserProfile } from "@/lib/firebase/db";
+import { toast } from "react-toastify";
 
 interface AppContextType {
   user: any;
@@ -13,8 +14,6 @@ interface AppContextType {
   image: string;
   setImage: (imageUrl: string) => void;
   saveData: () => Promise<void>;
-  toastMessage: string | null;
-  setToastMessage: (msg: string | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -25,7 +24,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<UserProfile>({ firstName: "", lastName: "", email: "" });
   const [image, setImage] = useState<string>('');
   const [loading, setLoading] = useState(true);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -49,6 +47,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           setLinks(userLinks.map(link => ({ ...link, userId: link.userId || user.uid })));
         } catch (err) {
           console.error("Error loading user data:", err);
+          toast.error("Failed to load profile details.");
         } finally {
           setLoading(false);
         }
@@ -90,13 +89,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         }
       }
       setLinks(updatedLinks);
-      setToastMessage("Your changes have been successfully saved!");
+      toast.success("Your changes have been successfully saved!");
     } catch (err) {
       console.error("Error saving user data:", err);
-      setToastMessage("Error saving changes. Please try again.");
+      toast.error("Error saving changes. Please try again.");
     } finally {
       setLoading(false);
-      setTimeout(() => setToastMessage(null), 3000);
     }
   };
 
@@ -111,8 +109,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       image,
       setImage,
       saveData,
-      toastMessage,
-      setToastMessage,
     }}>
       {children}
     </AppContext.Provider>
