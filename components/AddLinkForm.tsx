@@ -17,7 +17,6 @@ const AddLinkForm = ({ number, onAddLink, onRemoveLink }: AddLinkFormProps) => {
     twitter: /^https:\/\/(www\.)?x\.com\/.+$/,
     instagram: /^https:\/\/(www\.)?instagram\.com\/.+$/,
     linkedin: /^https:\/\/(www\.)?linkedin\.com\/.+$/,
-    // Add more platforms as needed
   };
 
   const validateUrl = (platform: string, url: string): boolean => {
@@ -31,9 +30,6 @@ const AddLinkForm = ({ number, onAddLink, onRemoveLink }: AddLinkFormProps) => {
   const handleAddLink = () => {
     if (validateUrl(platform, url)) {
       onAddLink(platform, url);
-      // setPlatform("");
-      // setUrl("");
-      // setError("");
     } else {
       setError("Invalid URL format for the selected platform");
     }
@@ -60,7 +56,6 @@ const AddLinkForm = ({ number, onAddLink, onRemoveLink }: AddLinkFormProps) => {
           <option value="twitter">Twitter</option>
           <option value="instagram">Instagram</option>
           <option value="linkedin">LinkedIn</option>
-          {/* Add more platforms as needed */}
         </select>
       </label>
       <label className="flex flex-col gap-1">

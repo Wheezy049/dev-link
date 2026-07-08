@@ -1,12 +1,18 @@
-import { db } from "@/firebase/config"; // Adjust the import to your firebase configuration
-import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, query, setDoc, getDoc} from "firebase/firestore";
-
+import { db } from "@/firebase/config";
+import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, query, setDoc, getDoc } from "firebase/firestore";
 
 export type Link = {
+  id?: string;
   platform: string;
   url: string;
-  id?: string;
   userId: string;
+};
+
+export type UserProfile = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  profileImage?: string;
 };
 
 export const createLink = async (link: { platform: string; url: string; userId: string }) => {
@@ -30,14 +36,13 @@ export const deleteLink = async (id: string, userId: string) => {
   await deleteDoc(docRef);
 };
 
-
-export const saveUserProfile = async (userId: string, profile: { firstName: string; lastName: string; email: string }) => {
+export const saveUserProfile = async (userId: string, profile: UserProfile) => {
   const userDocRef = doc(db, "users", userId);
-  await setDoc(userDocRef, { ...profile }, { merge: true });
+  await setDoc(userDocRef, profile, { merge: true });
 };
 
-export const getUserProfile = async (userId: string) => {
+export const getUserProfile = async (userId: string): Promise<UserProfile | null> => {
   const userDocRef = doc(db, "users", userId);
   const userDocSnap = await getDoc(userDocRef);
-  return userDocSnap.exists() ? userDocSnap.data() : null;
+  return userDocSnap.exists() ? (userDocSnap.data() as UserProfile) : null;
 };

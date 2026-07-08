@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react";
-import AddLinkForm from "../addLinkForm/addLinkForm";
-import EmptyForm from "../emptyForm/emptyForm";
-import { createLink, getLinks, updateLink, deleteLink } from "@/CRUD/crud";
-import useAuth from "@/useAuth/useAuth";
+import { useState } from "react";
+import AddLinkForm from "./AddLinkForm";
+import EmptyState from "./EmptyState";
+import { createLink, updateLink, deleteLink, Link as LinkType } from "@/lib/firebase/db";
+import useAuth from "@/hooks/useAuth";
 
-export type Link = {
-  platform: string;
-  url: string;
-  id?: string;
-  userId: string; // Ensure userId is always a string
-};
-
-export default function Links({
+export default function LinksEditor({
   links,
   setLinks,
 }: {
-  links: Link[];
-  setLinks: React.Dispatch<React.SetStateAction<Link[]>>;
+  links: LinkType[];
+  setLinks: React.Dispatch<React.SetStateAction<LinkType[]>>;
 }) {
   const { user } = useAuth();
   const [linkForms, setLinkForms] = useState<number[]>([]);
@@ -58,7 +51,6 @@ export default function Links({
   return (
     <div>
       <div className=" flex justify-center items-center m-6 gap-6">
-        {/* <SkeletonSideBar links={links}/> */}
         <div className="flex flex-col gap-1">
           <div className="w-[343px] md:w-[721px] lg:w-[808px] h-[739px] border-b border-b-[#D9D9D9] p-10 rounded-xl bg-white overflow-hidden">
             <h1 className="text-[#333] text-2xl md:text-3xl font-bold mb-2">
@@ -77,7 +69,7 @@ export default function Links({
               </button>
             </div>
             {!showForm ? (
-              <EmptyForm />
+              <EmptyState />
             ) : (
               linkForms.map((number) => (
                 <AddLinkForm

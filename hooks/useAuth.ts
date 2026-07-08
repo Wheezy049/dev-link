@@ -1,4 +1,3 @@
-// hooks/useAuth.ts
 "use client";
 import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
@@ -23,7 +22,7 @@ const useAuth = (): UseAuthReturn => {
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
-        router.push('/logIn');
+        router.push('/login');
       }
     }
   }, [user, loading, router]);

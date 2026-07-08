@@ -1,23 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
 
-interface ProfileProps {
+interface ProfileEditorProps {
   savedName: { firstName: string; lastName: string; email: string; };
   setSavedName: (name: { firstName: string; lastName: string; email: string }) => void;
   setImage: (imageUrl: string) => void;
   image: string;
 }
 
-export default function Profile({
+export default function ProfileEditor({
   savedName,
   setSavedName,
   image,
   setImage,
-}: ProfileProps) {
+}: ProfileEditorProps) {
   const [firstName, setFirstName] = useState(savedName.firstName || "");
   const [lastName, setLastName] = useState(savedName.lastName || "");
   const [email, setEmail] = useState(savedName.email || "");
-  // const [image, setImage] = useState("");
   const [error, setError] = useState("");
 
   const handleSave = () => {
@@ -26,35 +25,27 @@ export default function Profile({
       return;
     }
     setError("");
-    const updatedName = { firstName, lastName , email};
+    const updatedName = { firstName, lastName, email };
     setSavedName(updatedName);
-    console.log("Profile: Saving name:", updatedName);
+    console.log("ProfileEditor: Saving name:", updatedName);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (file) {
-      // Creating a file reader to read the image
       const reader = new FileReader();
-
       reader.onloadend = () => {
-        // Setting the image data URL (base64) to the state
-        handleSetImage(reader.result as string);
+        setImage(reader.result as string);
       };
-
-      // Read the image file as a data URL
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleSetImage = (imageUrl: string) => {
-    setImage(imageUrl);
   };
 
   useEffect(() => {
     setFirstName(savedName.firstName || "");
     setLastName(savedName.lastName || "");
+    setEmail(savedName.email || "");
   }, [savedName]);
 
   return (
@@ -101,7 +92,6 @@ export default function Profile({
                   </p>
                 </label>
               </form>
-              {/* Render the uploaded image if it exists */}
               {image && (
                 <img
                   src={image}
@@ -109,9 +99,6 @@ export default function Profile({
                   className="w-[193px] h-[193px] rounded-lg object-cover"
                 />
               )}
-              {/* <p className="text-[#737373] text-sm w-1/3">
-                Image must be below 1024x1024px. Use PNG or JPG format.
-              </p> */}
             </div>
             <div className="bg-[#FAFAFA] p-5 flex flex-col gap-3">
               <div className="flex w-full gap-4 items-center">

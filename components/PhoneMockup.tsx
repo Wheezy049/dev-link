@@ -1,4 +1,9 @@
-import { SavedNameProps } from "../layout";
+export type SavedNameProps = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 export type Link = {
   id?: string;
   platform: string;
@@ -6,18 +11,18 @@ export type Link = {
   userId: string;
 };
 
-interface SkeletonSideBarProps {
+interface PhoneMockupProps {
   links: Link[];
   savedName: SavedNameProps;
-  image: string
+  image: string;
 }
 
-export default function SkeletonSideBar({
+export default function PhoneMockup({
   links,
   savedName,
   image
-}: SkeletonSideBarProps) {
-  console.log("SkeletonSideBar: savedName updated:", JSON.stringify(savedName));
+}: PhoneMockupProps) {
+  console.log("PhoneMockup: savedName updated:", JSON.stringify(savedName));
   return (
     <div className="hidden lg:flex lg:flex-row justify-center items-center w-[560px] h-[834px] p-6 rounded-xl bg-white">
       <svg
@@ -46,34 +51,29 @@ export default function SkeletonSideBar({
             stroke="#737373"
           />
           <svg
-  x="95"
-  y="50"
-  xmlns="http://www.w3.org/2000/svg"
-  width="97"
-  height="150"
-  viewBox="0 0 97 150"
-  fill="none"
->
-  {/* Circle background */}
-  <circle cx="48.5" cy="48" r="48" fill="#EEEEEE" />
-  
-  {/* Image inside the circle */}
-  <image
-    href={image}
-    x="0"
-    y="0"
-    width="97"
-    height="150"
-    clipPath="url(#circleClip)"
-  />
-  
-  {/* Define the circular clip path to make the image round */}
-  <defs>
-    <clipPath id="circleClip">
-      <circle cx="48.5" cy="48" r="48" />
-    </clipPath>
-  </defs>
-</svg>
+            x="95"
+            y="50"
+            xmlns="http://www.w3.org/2000/svg"
+            width="97"
+            height="150"
+            viewBox="0 0 97 150"
+            fill="none"
+          >
+            <circle cx="48.5" cy="48" r="48" fill="#EEEEEE" />
+            <image
+              href={image}
+              x="0"
+              y="0"
+              width="97"
+              height="150"
+              clipPath="url(#circleClip)"
+            />
+            <defs>
+              <clipPath id="circleClip">
+                <circle cx="48.5" cy="48" r="48" />
+              </clipPath>
+            </defs>
+          </svg>
 
           <svg
             x="30"
@@ -140,7 +140,7 @@ export default function SkeletonSideBar({
           {Array.isArray(links) && links.length > 0 && (
             <g transform="translate(20, 150)">
               {links.map((link, index) => (
-                <g key={link.id} transform={`translate(0, ${index * 64})`}>
+                <g key={link.id || index} transform={`translate(0, ${index * 64})`}>
                   <rect
                     x="0"
                     y="90"
