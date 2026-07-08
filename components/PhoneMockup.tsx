@@ -73,11 +73,11 @@ export default function PhoneMockup({ links, savedName, image }: PhoneMockupProp
   return (
     <div className="hidden lg:flex justify-center items-center w-[560px] h-[834px] border border-[#D9D9D9] p-6 rounded-xl bg-white select-none">
       {/* Outer Phone Frame */}
-      <div className="relative w-[307px] h-[631px] rounded-[40px] border-[12px] border-[#737373] bg-white flex flex-col items-center p-6 shadow-md overflow-hidden">
+      <div className="relative w-[340px] h-[631px] rounded-[40px] border border-[#737373] bg-white flex flex-col items-center p-6 shadow-sm overflow-hidden">
         
         {/* Notch / Speaker Bar */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#FAFAFA] border-b border-r border-l border-gray-200 rounded-b-2xl z-20 flex items-center justify-center">
-          <div className="w-12 h-1 bg-gray-400 rounded-full"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-[#FAFAFA] border-b border-r border-l border-gray-200 rounded-b-xl z-20 flex items-center justify-center">
+          <div className="w-10 h-1 bg-gray-300 rounded-full"></div>
         </div>
 
         {/* Screen Scrollable View */}
