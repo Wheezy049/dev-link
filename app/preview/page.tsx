@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { platforms } from "@/lib/platforms";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function PreviewPage() {
   const { user, profile, image, links, loading } = useAppContext();
@@ -55,7 +56,7 @@ export default function PreviewPage() {
       </header>
 
       {/* Centered Preview Card */}
-      <main className="flex justify-center items-center px-4 mt-16 md:mt-24">
+      <main className="flex justify-center items-center px-4 pt-7 md:pt-16">
         <div className="bg-white rounded-3xl border border-[#D9D9D9] md:border-none shadow-sm md:shadow-md px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
           
           {/* Avatar Picture */}
@@ -81,7 +82,7 @@ export default function PreviewPage() {
           </h1>
 
           {/* Email Text */}
-          <p className="text-[#737373] text-base text-center truncate max-w-full mb-14">
+          <p className="text-[#737373] text-base text-center truncate max-w-full mb-6">
             {profile.email || <span className="text-gray-400 italic">No email set</span>}
           </p>
 
@@ -109,9 +110,7 @@ export default function PreviewPage() {
                       <span>{config.name}</span>
                     </div>
                     {/* Arrow Icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                      <path fill="currentColor" d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                    <ArrowRight size={16} />
                   </a>
                 );
               })

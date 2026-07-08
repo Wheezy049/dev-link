@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { platforms } from "@/lib/platforms";
+import { ArrowRight } from "lucide-react";
 
 export type SavedNameProps = {
   firstName: string;
@@ -24,9 +25,9 @@ interface PhoneMockupProps {
 export default function PhoneMockup({ links, savedName, image }: PhoneMockupProps) {
   console.log("PhoneMockup received links:", links);
   return (
-    <div className="hidden lg:flex justify-center items-center w-[560px] h-[834px] border border-[#D9D9D9] p-6 rounded-xl bg-white select-none">
+    <div className="hidden lg:flex justify-center items-center w-[560px] h-[834px] p-6 rounded-[24px] bg-white select-none">
       {/* Outer Phone Frame */}
-      <div className="relative w-[340px] h-[631px] rounded-[40px] border border-[#737373] bg-white flex flex-col items-center p-6 shadow-sm overflow-hidden">
+      <div className="relative w-[340px] h-[631px] rounded-[40px] border border-[#737373] bg-white flex flex-col items-center p-6 overflow-hidden">
         
         {/* Notch / Speaker Bar */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-[#FAFAFA] border-b border-r border-l border-gray-200 rounded-b-xl z-20 flex items-center justify-center">
@@ -86,19 +87,23 @@ export default function PhoneMockup({ links, savedName, image }: PhoneMockupProp
                   icon: null,
                 };
                 return (
-                  <div
+                  <a
                     key={link.id || idx}
-                    className={`flex items-center justify-between px-4 py-3 h-11 w-full text-white text-xs font-semibold rounded-lg shadow-sm transition-all ${config.bg}`}
+                    href={link.url || "#"}
+                    target={link.url ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      if (!link.url) e.preventDefault();
+                    }}
+                    className={`flex items-center justify-between px-4 py-3 h-11 w-full text-white text-xs font-semibold rounded-lg shadow-sm transition-all hover:opacity-90 active:scale-[0.98] ${config.bg}`}
                   >
                     <div className="flex items-center gap-2">
                       {config.icon}
                       <span>{config.name}</span>
                     </div>
                     {/* Arrow Icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                      <path fill="currentColor" d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
+                    <ArrowRight size={16} />
+                  </a>
                 );
               })
             )}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getUserProfile, getLinks, Link, UserProfile } from "@/lib/firebase/db";
 import { platforms } from "@/lib/platforms";
+import { ArrowRight } from "lucide-react";
 
 export default function PublicProfilePage() {
   const { uid } = useParams() as { uid: string };
@@ -98,7 +99,7 @@ export default function PublicProfilePage() {
 
           {/* Email Text */}
           {profile.email && (
-            <p className="text-[#737373] text-base text-center truncate max-w-full mb-14">
+            <p className="text-[#737373] text-base text-center truncate max-w-full mb-6">
               {profile.email}
             </p>
           )}
@@ -127,9 +128,7 @@ export default function PublicProfilePage() {
                       <span>{config.name}</span>
                     </div>
                     {/* Arrow Icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                      <path fill="currentColor" d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                    <ArrowRight size={16} />
                   </a>
                 );
               })

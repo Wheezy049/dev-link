@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "@/lib/firebase/db";
 import { platforms } from "@/lib/platforms";
+import { Trash2, ChevronUp, ChevronDown, GripVertical, Link2 } from "lucide-react";
 
 interface AddLinkFormProps {
   index: number;
@@ -29,13 +30,11 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
     return true;
   };
 
-  // Sync props to state
   useEffect(() => {
     setUrl(link.url);
-    setPlatform(link.platform);
+    setPlatform(link.platform || "github");
   }, [link]);
 
-  // Click outside listener to close custom dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -74,36 +73,39 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
       {/* Header Bar */}
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-bold text-[#737373] text-base flex items-center gap-2">
-          {/* Drag Handle Mock */}
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" fill="none" viewBox="0 0 12 6" className="cursor-grab">
-            <path fill="#737373" fillRule="evenodd" d="M0 1a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm0 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm5-4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm0 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm5-4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm0 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" clipRule="evenodd"/>
-          </svg>
+          {/* Grip handle */}
+          <GripVertical size={16} className="text-[#737373] cursor-grab" />
           <span>Link #{index + 1}</span>
         </h3>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {onMoveUp && (
             <button
               type="button"
               onClick={onMoveUp}
-              className="text-[#737373] hover:text-[#633CFF] transition-colors p-1 text-sm"
+              className="text-[#737373] hover:text-[#633CFF] hover:bg-gray-100 transition-all p-1.5 rounded"
               title="Move Up"
             >
-              ▲
+              <ChevronUp size={16} />
             </button>
           )}
           {onMoveDown && (
             <button
               type="button"
               onClick={onMoveDown}
-              className="text-[#737373] hover:text-[#633CFF] transition-colors p-1 text-sm"
+              className="text-[#737373] hover:text-[#633CFF] hover:bg-gray-100 transition-all p-1.5 rounded"
               title="Move Down"
             >
-              ▼
+              <ChevronDown size={16} />
             </button>
           )}
-          <span className="text-gray-300">|</span>
-          <button onClick={onRemove} className="text-[#737373] hover:text-red-500 transition-colors text-base font-normal">
-            Remove
+          <span className="text-gray-300 mx-1">|</span>
+          <button 
+            type="button"
+            onClick={onRemove} 
+            className="text-[#737373] hover:text-red-500 hover:bg-red-50 transition-all p-1.5 rounded flex items-center justify-center"
+            title="Remove Link"
+          >
+            <Trash2 size={16} />
           </button>
         </div>
       </div>
@@ -122,16 +124,10 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
               <span>{currentPlatform.name}</span>
             </div>
             {/* Chevron Icon */}
-            <svg
-              className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="8"
-              fill="none"
-              viewBox="0 0 14 8"
-            >
-              <path stroke="#633CFF" strokeWidth="2" d="M1 1l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <ChevronDown
+              size={16}
+              className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""} text-[#633CFF]`}
+            />
           </button>
 
           {/* Floating Dropdown Choices Card */}
@@ -161,9 +157,7 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
             error ? "border-red-500 focus-within:border-red-500" : "border-[#D9D9D9] focus-within:border-[#633CFF] focus-within:shadow-[0_0_8px_rgba(99,60,255,0.15)]"
           }`}>
             <span className="text-[#737373] mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                <path fill="#737373" d="M8.52 11.23a.62.62 0 0 1-.44-.19l-.33-.33a.62.62 0 0 1 0-.88L9.8 7.78a1.25 1.25 0 1 0-1.77-1.77L6.08 7.96a.62.62 0 0 1-.88 0l-.33-.33a.62.62 0 0 1 0-.88l1.95-1.95a2.5 2.5 0 0 1 3.53 3.53l-1.4 1.4a.62.62 0 0 1-.43.5ZM6.03 12.38a2.5 2.5 0 0 1-3.53-3.53l1.4-1.4a.62.62 0 0 1 .88 0l.33.33a.62.62 0 0 1 0 .88L3.06 9.7a1.25 1.25 0 1 0 1.77 1.77l1.95-1.95a.62.62 0 0 1 .88 0l.33.33a.62.62 0 0 1 0 .88l-1.96 1.96a2.49 2.49 0 0 1-1.78.74Z"/>
-              </svg>
+              <Link2 size={16} />
             </span>
             <input
               type="text"
