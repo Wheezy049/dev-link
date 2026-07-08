@@ -13,7 +13,7 @@ interface AppContextType {
   setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   image: string;
   setImage: (imageUrl: string) => void;
-  saveData: () => Promise<void>;
+  saveData: (updatedProfile?: UserProfile, updatedImage?: string) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -35,12 +35,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             setProfile({
               firstName: userProfile.firstName || "",
               lastName: userProfile.lastName || "",
-              email: userProfile.email || "",
+              email: userProfile.email || user.email || "",
               profileImage: userProfile.profileImage || "",
             });
             if (userProfile.profileImage) {
               setImage(userProfile.profileImage);
             }
+          } else {
+            // Default user's profile email to their Firebase Auth email
+            setProfile({
+              firstName: "",
+              lastName: "",
+              email: user.email || "",
+            });
           }
 
           const userLinks = await getLinks(user.uid);
@@ -58,14 +65,24 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user, authLoading]);
 
-  const saveData = async () => {
+  const saveData = async (updatedProfile?: UserProfile, updatedImage?: string) => {
     if (!user) return;
     setLoading(true);
     try {
+      const activeProfile = updatedProfile || profile;
+      const activeImage = updatedImage !== undefined ? updatedImage : image;
+
       await saveUserProfile(user.uid, {
-        ...profile,
-        profileImage: image,
+        ...activeProfile,
+        profileImage: activeImage,
       });
+
+      if (updatedProfile) {
+        setProfile(updatedProfile);
+      }
+      if (updatedImage !== undefined) {
+        setImage(updatedImage);
+      }
 
       const dbLinks = await getLinks(user.uid);
       const dbLinkIds = dbLinks.map(l => l.id).filter(Boolean) as string[];
@@ -97,6 +114,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
     }
   };
+
+  console.log("AppContext state links:", links);
 
   return (
     <AppContext.Provider value={{

@@ -85,22 +85,38 @@ export default function Header() {
           </h3>
         </Link>
       </div>
-      <div>
+      <div className="flex items-center gap-4">
         <button 
           onClick={handleLogout}
-          className="hidden md:flex justify-center px-7 py-3 rounded-lg border border-[#633CFF] text-[#633CFF] hover:bg-[#EFEBFF] transition-colors font-semibold text-base"
+          className="hidden md:block text-[#737373] hover:text-red-500 transition-colors font-semibold text-base"
         >
           Logout
         </button>
+        <Link 
+          href="/preview"
+          className="hidden md:flex justify-center px-7 py-3 rounded-lg border border-[#633CFF] text-[#633CFF] hover:bg-[#EFEBFF] transition-colors font-semibold text-base"
+        >
+          Preview
+        </Link>
+
         <button 
           onClick={handleLogout}
-          className="flex md:hidden justify-center p-3 rounded-lg border border-[#633CFF] text-[#633CFF] hover:bg-[#EFEBFF] transition-colors font-semibold text-base"
+          className="flex md:hidden p-2 text-[#737373] hover:text-red-500 transition-colors"
           title="Logout"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013-3v1" />
           </svg>
         </button>
+        <Link 
+          href="/preview"
+          className="flex md:hidden p-2 border border-[#633CFF] text-[#633CFF] hover:bg-[#EFEBFF] transition-colors rounded-lg"
+          title="Preview"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+            <path fill="currentColor" d="M10 3.5C5.83 3.5 2.22 6.2 0.5 10c1.72 3.8 5.33 6.5 9.5 6.5s7.78-2.7 9.5-6.5C17.78 6.2 14.17 3.5 10 3.5zm0 11c-2.48 0-4.5-2.02-4.5-4.5S7.52 5.5 10 5.5 14.5 7.52 14.5 10s-2.02 4.5-4.5 4.5zm0-7.5c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+          </svg>
+        </Link>
       </div>
     </div>
   );

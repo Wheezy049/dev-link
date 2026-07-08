@@ -66,37 +66,15 @@ export default function LinksEditor() {
               <EmptyState />
             ) : (
               links.map((link, index) => (
-                <div key={link.id || index} className="relative group">
-                  <AddLinkForm
-                    index={index}
-                    link={link}
-                    onChange={(updatedLink) => handleLinkChange(index, updatedLink)}
-                    onRemove={() => handleRemoveLink(index)}
-                  />
-                  {/* Reordering Controls overlay */}
-                  <div className="absolute top-4 right-20 flex gap-2">
-                    <button
-                      onClick={() => handleMoveUp(index)}
-                      disabled={index === 0}
-                      className={`p-1 px-2 text-xs border rounded bg-white hover:bg-[#EFEBFF] ${
-                        index === 0 ? "opacity-35 cursor-not-allowed" : "text-[#633CFF]"
-                      }`}
-                      title="Move Up"
-                    >
-                      ▲
-                    </button>
-                    <button
-                      onClick={() => handleMoveDown(index)}
-                      disabled={index === links.length - 1}
-                      className={`p-1 px-2 text-xs border rounded bg-white hover:bg-[#EFEBFF] ${
-                        index === links.length - 1 ? "opacity-35 cursor-not-allowed" : "text-[#633CFF]"
-                      }`}
-                      title="Move Down"
-                    >
-                      ▼
-                    </button>
-                  </div>
-                </div>
+                <AddLinkForm
+                  key={link.id || index}
+                  index={index}
+                  link={link}
+                  onChange={(updatedLink) => handleLinkChange(index, updatedLink)}
+                  onRemove={() => handleRemoveLink(index)}
+                  onMoveUp={index > 0 ? () => handleMoveUp(index) : undefined}
+                  onMoveDown={index < links.length - 1 ? () => handleMoveDown(index) : undefined}
+                />
               ))
             )}
           </div>
@@ -105,7 +83,7 @@ export default function LinksEditor() {
 
       <div className="w-[343px] md:w-[721px] lg:w-[808px] h-[94px] flex justify-end items-center px-10 py-6 border border-[#D9D9D9] rounded-xl bg-white">
         <button
-          onClick={saveData}
+          onClick={() => saveData()}
           disabled={loading || links.length === 0}
           className={`px-7 py-3 text-base font-semibold text-white bg-[#633CFF] rounded-lg transition-colors ${
             loading || links.length === 0

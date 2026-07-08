@@ -15,10 +15,8 @@ export default function ProfileEditor() {
       return;
     }
     setError("");
-    // Update local context values
-    setProfile({ firstName, lastName, email });
-    // Trigger global context save
-    await saveData();
+    // Trigger global context save with explicit values
+    await saveData({ firstName, lastName, email }, image);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
