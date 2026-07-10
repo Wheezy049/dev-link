@@ -57,7 +57,7 @@ export default function PublicProfilePage() {
           The link sharing profile you are trying to visit does not exist or has been removed.
         </p>
         <a
-          href="/dashboard"
+          href="/"
           className="px-6 py-3 bg-[#633CFF] hover:bg-[#5733E5] text-white font-semibold rounded-lg transition-colors shadow-sm"
         >
           Create Your Own Profile
@@ -71,7 +71,7 @@ export default function PublicProfilePage() {
       <div className="absolute top-0 left-0 w-full h-[357px] bg-[#633CFF] rounded-b-[32px] -z-10 hidden md:block"></div>
       {/* Centered Preview Card */}
       <main className="flex justify-center items-center px-4 pt-16 md:pt-36">
-        <div className="bg-white rounded-3xl border border-[#D9D9D9] md:border-none shadow-sm md:shadow-md px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
+        <div className="bg-white rounded-3xl px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
           {/* Avatar Picture */}
           <div className="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center border-4 border-[#633CFF] mb-6 shadow-sm">
             {profile.profileImage ? (
@@ -127,6 +127,15 @@ export default function PublicProfilePage() {
                 );
               })
             )}
+          </div>
+          {/* Create Your Own Profile button for guests/viewers */}
+          <div className="mt-8 w-full border-t border-gray-100 pt-6">
+            <a
+              href="/"
+              className="flex items-center justify-center h-12 w-full border border-[#633CFF] text-[#633CFF] hover:bg-[#EFEBFF] font-semibold rounded-lg transition-colors text-base"
+            >
+              Create Your Own Profile
+            </a>
           </div>
         </div>
       </main>

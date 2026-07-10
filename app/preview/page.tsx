@@ -54,7 +54,7 @@ export default function PreviewPage() {
       </header>
       {/* Centered Preview Card */}
       <main className="flex justify-center items-center px-4 pt-7 md:pt-16">
-        <div className="bg-white rounded-3xl border border-[#D9D9D9] md:border-none shadow-sm md:shadow-md px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
+        <div className="bg-white rounded-3xl px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
           {/* Avatar Picture */}
           <div className="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center border-4 border-[#633CFF] mb-6 shadow-sm">
             {image ? (

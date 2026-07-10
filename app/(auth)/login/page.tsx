@@ -67,17 +67,17 @@ export default function LogIn() {
   return (
     <div className="flex flex-col justify-center min-h-screen w-full items-center bg-[#FAFAFA] py-12 px-4">
       {/* Logo Header */}
-      <div className="flex gap-2 justify-center items-center mb-12 select-none">
+      <div className="flex gap-2 justify-center items-center mb-6 select-none">
         <Link2 size={32} className="text-[#633CFF]" />
         <h1 className="text-[#333333] text-3xl font-bold">devlinks</h1>
       </div>
       {/* Form Container Card */}
       <form
         onSubmit={handleLogIn}
-        className="w-full max-w-[476px] p-8 md:p-10 bg-white border border-[#D9D9D9] rounded-xl shadow-sm"
+        className="w-full max-w-[476px] p-8 md:p-10 bg-white rounded-xl"
       >
-        <h2 className="text-[#333333] text-2xl md:text-3xl font-bold mb-2">Login</h2>
-        <p className="text-[#737373] text-base mb-10">
+        <h2 className="text-[#333333] text-2xl md:text-3xl font-bold mb-1">Login</h2>
+        <p className="text-[#737373] text-base mb-5">
           Add your details below to get back into the app
         </p>
         {/* Email Field */}
