@@ -4,7 +4,6 @@ import { useAppContext } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { platforms } from "@/lib/platforms";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default function PreviewPage() {
@@ -36,29 +35,26 @@ export default function PreviewPage() {
     <div className="relative min-h-screen w-full bg-[#FAFAFA] pb-12 select-none">
       {/* Decorative Purple Banner */}
       <div className="absolute top-0 left-0 w-full h-[357px] bg-[#633CFF] rounded-b-[32px] -z-10 hidden md:block"></div>
-
       {/* Header Container */}
       <header className="p-4 max-w-[1392px] mx-auto md:pt-6">
         <div className="bg-white rounded-xl p-4 flex justify-between items-center shadow-sm">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/dashboard")}
             className="px-5 py-3 border border-[#633CFF] text-[#633CFF] hover:bg-[#EFEBFF] transition-colors rounded-lg font-semibold text-sm md:text-base"
           >
             Back to Editor
           </button>
           <button
             onClick={handleShare}
-            className="px-5 py-3 bg-[#633CFF] hover:bg-[#BEADFF] text-white transition-colors rounded-lg font-semibold text-sm md:text-base"
+            className="px-5 py-3 bg-[#633CFF] hover:bg-[#5733E5] text-white transition-colors rounded-lg font-semibold text-sm md:text-base"
           >
             Share Link
           </button>
         </div>
       </header>
-
       {/* Centered Preview Card */}
       <main className="flex justify-center items-center px-4 pt-7 md:pt-16">
         <div className="bg-white rounded-3xl border border-[#D9D9D9] md:border-none shadow-sm md:shadow-md px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
-          
           {/* Avatar Picture */}
           <div className="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center border-4 border-[#633CFF] mb-6 shadow-sm">
             {image ? (
@@ -71,7 +67,6 @@ export default function PreviewPage() {
               <div className="w-full h-full bg-gray-200 animate-pulse"></div>
             )}
           </div>
-
           {/* Name Header */}
           <h1 className="text-[#333333] text-2xl md:text-3xl font-bold text-center truncate max-w-full mb-2">
             {profile.firstName || profile.lastName ? (
@@ -80,12 +75,10 @@ export default function PreviewPage() {
               <span className="text-gray-400 text-lg italic">No Name Set</span>
             )}
           </h1>
-
           {/* Email Text */}
           <p className="text-[#737373] text-base text-center truncate max-w-full mb-6">
             {profile.email || <span className="text-gray-400 italic">No email set</span>}
           </p>
-
           {/* Render Active styled brand links */}
           <div className="flex flex-col gap-5 w-full">
             {links.length === 0 ? (
@@ -116,7 +109,6 @@ export default function PreviewPage() {
               })
             )}
           </div>
-
         </div>
       </main>
     </div>

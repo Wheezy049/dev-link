@@ -57,8 +57,8 @@ export default function PublicProfilePage() {
           The link sharing profile you are trying to visit does not exist or has been removed.
         </p>
         <a
-          href="/"
-          className="px-6 py-3 bg-[#633CFF] hover:bg-[#BEADFF] text-white font-semibold rounded-lg transition-colors shadow-sm"
+          href="/dashboard"
+          className="px-6 py-3 bg-[#633CFF] hover:bg-[#5733E5] text-white font-semibold rounded-lg transition-colors shadow-sm"
         >
           Create Your Own Profile
         </a>
@@ -68,13 +68,10 @@ export default function PublicProfilePage() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#FAFAFA] pb-12 select-none">
-      {/* Decorative Purple Banner */}
       <div className="absolute top-0 left-0 w-full h-[357px] bg-[#633CFF] rounded-b-[32px] -z-10 hidden md:block"></div>
-
       {/* Centered Preview Card */}
       <main className="flex justify-center items-center px-4 pt-16 md:pt-36">
         <div className="bg-white rounded-3xl border border-[#D9D9D9] md:border-none shadow-sm md:shadow-md px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
-          
           {/* Avatar Picture */}
           <div className="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center border-4 border-[#633CFF] mb-6 shadow-sm">
             {profile.profileImage ? (
@@ -87,7 +84,6 @@ export default function PublicProfilePage() {
               <div className="w-full h-full bg-gray-200"></div>
             )}
           </div>
-
           {/* Name Header */}
           <h1 className="text-[#333333] text-2xl md:text-3xl font-bold text-center truncate max-w-full mb-2">
             {profile.firstName || profile.lastName ? (
@@ -96,14 +92,12 @@ export default function PublicProfilePage() {
               <span className="text-gray-400 text-lg italic">Anonymous Developer</span>
             )}
           </h1>
-
           {/* Email Text */}
           {profile.email && (
             <p className="text-[#737373] text-base text-center truncate max-w-full mb-6">
               {profile.email}
             </p>
           )}
-
           {/* Render Active styled brand links */}
           <div className="flex flex-col gap-5 w-full">
             {links.length === 0 ? (
@@ -134,7 +128,6 @@ export default function PublicProfilePage() {
               })
             )}
           </div>
-
         </div>
       </main>
     </div>

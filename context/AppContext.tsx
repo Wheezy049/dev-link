@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 interface AppContextType {
   user: any;
   loading: boolean;
+  saving: boolean;
   links: Link[];
   setLinks: React.Dispatch<React.SetStateAction<Link[]>>;
   profile: UserProfile;
   setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   image: string;
   setImage: (imageUrl: string) => void;
-  saveData: (updatedProfile?: UserProfile, updatedImage?: string) => Promise<void>;
+  saveData: (updatedProfile?: UserProfile, updatedImage?: string, updatedLinks?: Link[]) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -24,6 +25,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<UserProfile>({ firstName: "", lastName: "", email: "" });
   const [image, setImage] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -65,12 +67,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user, authLoading]);
 
-  const saveData = async (updatedProfile?: UserProfile, updatedImage?: string) => {
-    if (!user) return;
-    setLoading(true);
+  const saveData = async (updatedProfile?: UserProfile, updatedImage?: string, updatedLinks?: Link[]) => {
+    if (!user) {
+      console.log("saveData aborted: user is null");
+      return;
+    }
+    setSaving(true);
     try {
       const activeProfile = updatedProfile || profile;
       const activeImage = updatedImage !== undefined ? updatedImage : image;
+      const activeLinks = updatedLinks || links;
 
       await saveUserProfile(user.uid, {
         ...activeProfile,
@@ -81,12 +87,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setProfile(updatedProfile);
       }
       if (updatedImage !== undefined) {
-        setImage(updatedImage);
+        setImage(activeImage);
       }
 
       const dbLinks = await getLinks(user.uid);
       const dbLinkIds = dbLinks.map(l => l.id).filter(Boolean) as string[];
-      const currentLinkIds = links.map(l => l.id).filter(Boolean) as string[];
+      const currentLinkIds = activeLinks.map(l => l.id).filter(Boolean) as string[];
 
       // Delete removed links
       const toDelete = dbLinkIds.filter(id => !currentLinkIds.includes(id));
@@ -95,32 +101,31 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       }
 
       // Create or update remaining links
-      const updatedLinks: Link[] = [];
-      for (const link of links) {
+      const finalLinks: Link[] = [];
+      for (const link of activeLinks) {
         if (link.id) {
           await updateLink(link.id, user.uid, { platform: link.platform, url: link.url });
-          updatedLinks.push(link);
+          finalLinks.push(link);
         } else {
           const newId = await createLink({ platform: link.platform, url: link.url, userId: user.uid });
-          updatedLinks.push({ ...link, id: newId });
+          finalLinks.push({ ...link, id: newId });
         }
       }
-      setLinks(updatedLinks);
+      setLinks(finalLinks);
       toast.success("Your changes have been successfully saved!");
     } catch (err) {
       console.error("Error saving user data:", err);
       toast.error("Error saving changes. Please try again.");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
-
-  console.log("AppContext state links:", links);
 
   return (
     <AppContext.Provider value={{
       user,
       loading: loading || authLoading,
+      saving,
       links,
       setLinks,
       profile,

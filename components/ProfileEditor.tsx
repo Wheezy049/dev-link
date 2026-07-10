@@ -4,7 +4,7 @@ import { useAppContext } from "@/context/AppContext";
 import { Image as ImageIcon } from "lucide-react";
 
 export default function ProfileEditor() {
-  const { profile, setProfile, image, setImage, saveData, loading } = useAppContext();
+  const { profile, image, setImage, saveData, saving } = useAppContext();
   const [firstName, setFirstName] = useState(profile.firstName || "");
   const [lastName, setLastName] = useState(profile.lastName || "");
   const [email, setEmail] = useState(profile.email || "");
@@ -80,7 +80,6 @@ export default function ProfileEditor() {
         <p className="text-base text-[#737373] mb-10">
           Add your details to create a personal touch to your profile.
         </p>
-
         {/* Profile Picture Upload Section */}
         <div className="bg-[#FAFAFA] p-6 rounded-xl mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
           <h2 className="text-[#737373] text-sm md:text-base w-full md:w-1/3">
@@ -95,7 +94,6 @@ export default function ProfileEditor() {
                 className="absolute inset-0 opacity-0 cursor-pointer z-10"
                 id="image-upload"
               />
-              
               {image ? (
                 <div className="absolute inset-0 w-full h-full z-0 group">
                   <img
@@ -120,7 +118,6 @@ export default function ProfileEditor() {
             </p>
           </div>
         </div>
-
         {/* Text Input Fields Section */}
         <div className="bg-[#FAFAFA] p-6 rounded-xl flex flex-col gap-4">
           <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full">
@@ -161,22 +158,27 @@ export default function ProfileEditor() {
           </div>
         </div>
       </div>
-
       {error && <p className="text-red-500 text-xs mt-3">{error}</p>}
-
       <div>
         <hr className="border-[#D9D9D9] my-6" />
         <div className="flex justify-end">
           <button
             onClick={handleSave}
-            disabled={loading}
+            disabled={saving}
             className={`px-7 py-3 text-base font-semibold text-white bg-[#633CFF] rounded-lg transition-colors ${
-              loading
+              saving
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-[#BEADFF] hover:shadow-lg"
+                : "hover:bg-[#5733E5] hover:shadow-lg"
             }`}
           >
-            {loading ? "Saving..." : "Save"}
+            {saving ? (
+              <div className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                <span>Saving...</span>
+              </div>
+            ) : (
+              "Save"
+            )}
           </button>
         </div>
       </div>

@@ -4,7 +4,7 @@ import AddLinkForm from "./AddLinkForm";
 import EmptyState from "./EmptyState";
 
 export default function LinksEditor() {
-  const { links, setLinks, saveData, loading, user } = useAppContext();
+  const { links, setLinks, saveData, saving, user } = useAppContext();
 
   const handleAddLink = () => {
     setLinks((prev) => [
@@ -56,7 +56,6 @@ export default function LinksEditor() {
             + Add new link
           </button>
         </div>
-
         <div className="max-h-[480px] overflow-y-auto no-scrollbar flex flex-col gap-4">
           {links.length === 0 ? (
             <EmptyState />
@@ -81,20 +80,26 @@ export default function LinksEditor() {
           )}
         </div>
       </div>
-
       <div>
         <hr className="border-[#D9D9D9] my-6" />
         <div className="flex justify-end">
           <button
-            onClick={() => saveData()}
-            disabled={loading || links.length === 0}
+            onClick={() => saveData(undefined, undefined, links)}
+            disabled={saving}
             className={`px-7 py-3 text-base font-semibold text-white bg-[#633CFF] rounded-lg transition-colors ${
-              loading || links.length === 0
+              saving
                 ? "opacity-25 cursor-not-allowed"
-                : "hover:bg-[#BEADFF] hover:shadow-lg"
+                : "hover:bg-[#5733E5] hover:shadow-lg"
             }`}
           >
-            {loading ? "Saving..." : "Save"}
+            {saving ? (
+              <div className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                <span>Saving...</span>
+              </div>
+            ) : (
+              "Save"
+            )}
           </button>
         </div>
       </div>

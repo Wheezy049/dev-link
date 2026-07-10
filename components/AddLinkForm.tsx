@@ -109,7 +109,6 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
           </button>
         </div>
       </div>
-
       <div className="flex flex-col gap-4">
         {/* Custom React Dropdown Selector */}
         <div className="relative w-full" ref={dropdownRef}>
@@ -129,7 +128,6 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
               className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""} text-[#633CFF]`}
             />
           </button>
-
           {/* Floating Dropdown Choices Card */}
           {isOpen && (
             <div className="absolute top-[105%] left-0 w-full bg-white border border-[#D9D9D9] rounded-lg shadow-lg z-30 max-h-[220px] overflow-y-auto mt-1 no-scrollbar animate-fade-in">
@@ -149,7 +147,6 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
             </div>
           )}
         </div>
-
         {/* URL Input */}
         <label className="flex flex-col gap-1.5 w-full relative">
           <span className="text-[#333333] text-xs font-normal">Link</span>

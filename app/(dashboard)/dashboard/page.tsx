@@ -2,7 +2,7 @@
 import { useAppContext } from "@/context/AppContext";
 import LinksEditor from "@/components/LinksEditor";
 
-export default function Home() {
+export default function Dashboard() {
   const { loading } = useAppContext();
 
   if (loading) {

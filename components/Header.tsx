@@ -22,19 +22,18 @@ export default function Header() {
   return (
     <div className="bg-white w-full m-0 px-6 py-4 flex justify-between rounded-[24px] select-none">
       {/* Brand Logo */}
-      <Link href={"/"} className="flex items-center gap-2">
+      <Link href={"/dashboard"} className="flex items-center gap-2">
         <Link2 size={32} className="text-[#633CFF]" />
         <h1 className="hidden md:block text-[#333333] text-2xl font-bold">
           devlinks
         </h1>
       </Link>
-
       {/* Tabs Navigation */}
       <div className="flex gap-2 items-center">
         <Link
-          href={"/"}
+          href={"/dashboard"}
           className={`flex items-center gap-2 px-7 py-3 rounded-lg font-semibold text-base transition-colors ${
-            pathname === "/" ? "bg-[#EFEBFF] text-[#633CFF]" : "text-[#737373] hover:text-[#633CFF]"
+            pathname === "/dashboard" ? "bg-[#EFEBFF] text-[#633CFF]" : "text-[#737373] hover:text-[#633CFF]"
           }`}
         >
           <Link2 size={20} />
@@ -50,7 +49,6 @@ export default function Header() {
           <span className="hidden md:block">Profile Details</span>
         </Link>
       </div>
-
       {/* Action Buttons */}
       <div className="flex items-center gap-4">
         {/* Desktop Buttons */}
@@ -66,7 +64,6 @@ export default function Header() {
         >
           Preview
         </Link>
-
         {/* Mobile Buttons */}
         <button 
           onClick={handleLogout}

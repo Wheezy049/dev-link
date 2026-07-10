@@ -40,7 +40,7 @@ export default function LogIn() {
       const res = await signInWithEmailAndPassword(email, password);
       if (res?.user) {
         toast.success("Successfully logged in!");
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch (error) {
       console.error(error);
@@ -71,7 +71,6 @@ export default function LogIn() {
         <Link2 size={32} className="text-[#633CFF]" />
         <h1 className="text-[#333333] text-3xl font-bold">devlinks</h1>
       </div>
-
       {/* Form Container Card */}
       <form
         onSubmit={handleLogIn}
@@ -81,7 +80,6 @@ export default function LogIn() {
         <p className="text-[#737373] text-base mb-10">
           Add your details below to get back into the app
         </p>
-
         {/* Email Field */}
         <div className="mb-6">
           <label className="mb-1 block text-[#333333] text-xs font-normal">Email address</label>
@@ -109,7 +107,6 @@ export default function LogIn() {
             )}
           </div>
         </div>
-
         {/* Password Field */}
         <div className="mb-6">
           <label className="mb-1 block text-[#333333] text-xs font-normal">Password</label>
@@ -136,18 +133,23 @@ export default function LogIn() {
             )}
           </div>
         </div>
-
         {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
-          className={`w-full h-12 rounded-lg flex justify-center items-center py-3 bg-[#633CFF] hover:bg-[#BEADFF] text-white text-base font-semibold mb-6 transition-colors ${
+          className={`w-full h-12 rounded-lg flex justify-center items-center py-3 bg-[#633CFF] hover:bg-[#5733E5] text-white text-base font-semibold mb-6 transition-colors ${
             loading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+              <span>Logging in...</span>
+            </div>
+          ) : (
+            "Login"
+          )}
         </button>
-
         {/* Create Account Link */}
         <div className="flex flex-col sm:flex-row gap-1 text-base justify-center items-center">
           <p className="text-[#737373]">Don&apos;t have an account?</p>
