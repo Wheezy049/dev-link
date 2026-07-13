@@ -2,7 +2,6 @@ import React from "react";
 import { 
   FaGithub, 
   FaFacebook, 
-  FaTwitter, 
   FaInstagram, 
   FaLinkedin, 
   FaYoutube, 
@@ -12,6 +11,7 @@ import {
   FaGitlab, 
   FaDev 
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { SiHashnode } from "react-icons/si";
 
 export type PlatformConfig = {
@@ -45,12 +45,12 @@ export const platforms: PlatformConfig[] = [
   },
   {
     id: "twitter",
-    name: "Twitter",
-    color: "#1D9BF0",
-    bg: "bg-[#1D9BF0] hover:bg-[#007cc4] text-white",
+    name: "X",
+    color: "#000000",
+    bg: "bg-[#000000] hover:bg-[#1a1a1a] text-white border border-[#2f2f2f]",
     pattern: /^https:\/\/(www\.)?(x|twitter)\.com\/.+$/,
     placeholder: "https://x.com/username",
-    icon: <FaTwitter size={16} />
+    icon: <FaXTwitter size={16} />
   },
   {
     id: "instagram",

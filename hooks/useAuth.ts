@@ -21,7 +21,7 @@ const useAuth = (): UseAuthReturn => {
     if (!loading) {
       if (user) {
         setIsAuthenticated(true);
-        if (pathname === "/login" || pathname === "/signup") {
+        if (pathname === "/login" || pathname === "/signup" || pathname === "/") {
           router.push("/dashboard");
         }
       } else {

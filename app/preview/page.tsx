@@ -12,7 +12,10 @@ export default function PreviewPage() {
 
   const handleShare = () => {
     if (!user) return;
-    const shareUrl = `${window.location.origin}/user/${user.uid}`;
+    const shareUrl = profile.username
+      ? `${window.location.origin}/user/${profile.username}`
+      : `${window.location.origin}/user/${user.uid}`;
+      
     navigator.clipboard.writeText(shareUrl)
       .then(() => {
         toast.success("The link has been copied to your clipboard!");
@@ -32,11 +35,11 @@ export default function PreviewPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-[#FAFAFA] pb-12 select-none">
+    <div className="relative min-h-screen w-full bg-[#FAFAFA] pb-6 select-none">
       {/* Decorative Purple Banner */}
       <div className="absolute top-0 left-0 w-full h-[357px] bg-[#633CFF] rounded-b-[32px] -z-10 hidden md:block"></div>
       {/* Header Container */}
-      <header className="p-4 max-w-[1392px] mx-auto md:pt-6">
+      <header className="p-4 max-w-[1392px] mx-auto md:pt-4">
         <div className="bg-white rounded-xl p-4 flex justify-between items-center shadow-sm">
           <button
             onClick={() => router.push("/dashboard")}
@@ -53,10 +56,10 @@ export default function PreviewPage() {
         </div>
       </header>
       {/* Centered Preview Card */}
-      <main className="flex justify-center items-center px-4 pt-7 md:pt-16">
-        <div className="bg-white rounded-3xl px-14 py-12 w-full max-w-[349px] flex flex-col items-center">
+      <main className="flex justify-center items-center px-4 pt-6 md:pt-12">
+        <div className="bg-white rounded-3xl px-14 py-12 w-full max-w-[500px] flex flex-col items-center">
           {/* Avatar Picture */}
-          <div className="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center border-4 border-[#633CFF] mb-6 shadow-sm">
+          <div className="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center border-4 border-[#633CFF] mb-3 shadow-sm">
             {image ? (
               <img
                 src={image}
@@ -67,18 +70,39 @@ export default function PreviewPage() {
               <div className="w-full h-full bg-gray-200 animate-pulse"></div>
             )}
           </div>
-          {/* Name Header */}
-          <h1 className="text-[#333333] text-2xl md:text-3xl font-bold text-center truncate max-w-full mb-2">
-            {profile.firstName || profile.lastName ? (
+          {/* Name/Username Header */}
+          <h1 className="text-[#333333] text-2xl md:text-3xl font-bold text-center truncate max-w-full">
+            {profile.username ? (
+              `@${profile.username}`
+            ) : profile.firstName || profile.lastName ? (
               `${profile.firstName} ${profile.lastName}`
             ) : (
               <span className="text-gray-400 text-lg italic">No Name Set</span>
             )}
           </h1>
-          {/* Email Text */}
-          <p className="text-[#737373] text-base text-center truncate max-w-full mb-6">
-            {profile.email || <span className="text-gray-400 italic">No email set</span>}
-          </p>
+          {/* Subtitle Full Name (only if username is set) */}
+          {profile.username && (profile.firstName || profile.lastName) && (
+            <p className="text-[#737373] text-sm font-medium text-center mt-0.5">
+              {profile.firstName} {profile.lastName}
+            </p>
+          )}
+          {/* Bio Headline */}
+          {profile.bio && (
+            <p className="text-[#737373] text-sm italic text-center mt-0.5 px-4 max-w-full">
+              &quot;{profile.bio}&quot;
+            </p>
+          )}
+          {/* Contact Details (Email & Phone Number) */}
+          <div className="flex flex-col items-center gap-1 mt-0.5 mb-4 w-full text-xs text-[#737373]">
+            {profile.email && <span className="truncate max-w-full">{profile.email}</span>}
+            {profile.phoneNumber && <span>{profile.phoneNumber}</span>}
+          </div>
+          {/* Description */}
+          {profile.description && (
+            <p className="text-[#333333] text-sm text-center px-4 mb-4 whitespace-pre-wrap max-w-full leading-relaxed border-t border-gray-50 pt-4 w-full">
+              {profile.description}
+            </p>
+          )}
           {/* Render Active styled brand links */}
           <div className="flex flex-col gap-5 w-full">
             {links.length === 0 ? (

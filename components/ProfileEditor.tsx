@@ -8,6 +8,10 @@ export default function ProfileEditor() {
   const [firstName, setFirstName] = useState(profile.firstName || "");
   const [lastName, setLastName] = useState(profile.lastName || "");
   const [email, setEmail] = useState(profile.email || "");
+  const [username, setUsername] = useState(profile.username || "");
+  const [bio, setBio] = useState(profile.bio || "");
+  const [phoneNumber, setPhoneNumber] = useState(profile.phoneNumber || "");
+  const [description, setDescription] = useState(profile.description || "");
   const [error, setError] = useState("");
 
   const handleSave = async () => {
@@ -17,7 +21,18 @@ export default function ProfileEditor() {
     }
     setError("");
     // Trigger global context save with explicit values
-    await saveData({ firstName, lastName, email }, image);
+    await saveData(
+      { 
+        firstName, 
+        lastName, 
+        email, 
+        username: username.trim(),
+        bio: bio.trim(),
+        phoneNumber: phoneNumber.trim(),
+        description: description.trim()
+      }, 
+      image
+    );
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +84,10 @@ export default function ProfileEditor() {
     setFirstName(profile.firstName || "");
     setLastName(profile.lastName || "");
     setEmail(profile.email || "");
+    setUsername(profile.username || "");
+    setBio(profile.bio || "");
+    setPhoneNumber(profile.phoneNumber || "");
+    setDescription(profile.description || "");
   }, [profile]);
 
   return (
@@ -113,9 +132,20 @@ export default function ProfileEditor() {
                 </div>
               )}
             </div>
-            <p className="text-[#737373] text-xs max-w-[200px]">
-              Image will be optimized automatically. Use PNG or JPG format.
-            </p>
+            <div className="flex flex-col gap-2">
+              <p className="text-[#737373] text-xs max-w-[200px]">
+                Image will be optimized automatically. Use PNG or JPG format.
+              </p>
+              {image && (
+                <button
+                  type="button"
+                  onClick={() => setImage("")}
+                  className="text-red-500 hover:text-red-700 font-semibold text-xs text-left w-fit transition-colors mt-1"
+                >
+                  Remove Image
+                </button>
+              )}
+            </div>
           </div>
         </div>
         {/* Text Input Fields Section */}
@@ -154,6 +184,71 @@ export default function ProfileEditor() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="bg-white border border-[#D9D9D9] rounded-lg p-3 outline-none focus:border-[#633CFF] focus:ring-1 focus:ring-[#633CFF] text-[#333333] text-base w-full md:w-2/3"
+            />
+          </div>
+        </div>
+
+        {/* Additional Details Section */}
+        <div className="bg-[#FAFAFA] p-6 rounded-xl flex flex-col gap-4 mt-6">
+          <h2 className="text-[#333333] text-lg font-semibold">Additional Info</h2>
+          
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full">
+            <label className="text-[#737373] text-sm md:w-1/3">
+              Username Slug
+            </label>
+            <div className="flex flex-col w-full md:w-2/3">
+              <div className="flex items-center bg-white border border-[#D9D9D9] rounded-lg focus-within:border-[#633CFF] focus-within:ring-1 focus-within:ring-[#633CFF]">
+                <span className="pl-3 pr-1 text-[#737373] text-base select-none">/user/</span>
+                <input
+                  type="text"
+                  placeholder="e.g. faruq"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9-_]/g, ""))}
+                  className="bg-transparent p-3 outline-none text-[#333333] text-base w-full pl-0"
+                />
+              </div>
+              <p className="text-[#737373] text-xs mt-1">
+                Only letters, numbers, hyphens (-), and underscores (_) allowed.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full">
+            <label className="text-[#737373] text-sm md:w-1/3">
+              Bio / Headline
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. Frontend Developer | UI Designer"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              className="bg-white border border-[#D9D9D9] rounded-lg p-3 outline-none focus:border-[#633CFF] focus:ring-1 focus:ring-[#633CFF] text-[#333333] text-base w-full md:w-2/3"
+            />
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full">
+            <label className="text-[#737373] text-sm md:w-1/3">
+              Phone Number
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. +1 234 567 890"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="bg-white border border-[#D9D9D9] rounded-lg p-3 outline-none focus:border-[#633CFF] focus:ring-1 focus:ring-[#633CFF] text-[#333333] text-base w-full md:w-2/3"
+            />
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-4 w-full">
+            <label className="text-[#737373] text-sm md:w-1/3 mt-3">
+              Description
+            </label>
+            <textarea
+              placeholder="e.g. Tell us more about yourself, your background, or what you're working on..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={4}
+              className="bg-white border border-[#D9D9D9] rounded-lg p-3 outline-none focus:border-[#633CFF] focus:ring-1 focus:ring-[#633CFF] text-[#333333] text-base w-full md:w-2/3 resize-none"
             />
           </div>
         </div>

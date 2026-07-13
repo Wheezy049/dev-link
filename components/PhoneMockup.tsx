@@ -7,6 +7,10 @@ export type SavedNameProps = {
   firstName: string;
   lastName: string;
   email: string;
+  username?: string;
+  bio?: string;
+  phoneNumber?: string;
+  description?: string;
 };
 
 export type Link = {
@@ -45,7 +49,7 @@ export default function PhoneMockup({ links, savedName, image }: PhoneMockupProp
             )}
           </div>
           {/* Names Display */}
-          <div className="mt-6 flex flex-col items-center text-center w-full min-h-[50px]">
+          <div className="mt-4 flex flex-col items-center text-center w-full min-h-[50px]">
             {savedName.firstName || savedName.lastName ? (
               <h2 className="text-[#333333] text-lg font-bold truncate max-w-[220px]">
                 {savedName.firstName} {savedName.lastName}
@@ -53,8 +57,18 @@ export default function PhoneMockup({ links, savedName, image }: PhoneMockupProp
             ) : (
               <div className="h-4 w-32 bg-[#EEEEEE] rounded animate-pulse"></div>
             )}
+            {savedName.username && (
+              <p className="text-[#633CFF] text-xs font-semibold mt-0.5 truncate max-w-[200px]">
+                @{savedName.username}
+              </p>
+            )}
+            {savedName.bio && (
+              <p className="text-[#737373] text-xs italic mt-0.5 max-w-[200px] line-clamp-1">
+                {savedName.bio}
+              </p>
+            )}
             {savedName.email ? (
-              <p className="text-[#737373] text-xs mt-1 truncate max-w-[200px]">
+              <p className="text-[#737373] text-xs mt-0.5 truncate max-w-[200px]">
                 {savedName.email}
               </p>
             ) : (
@@ -62,7 +76,7 @@ export default function PhoneMockup({ links, savedName, image }: PhoneMockupProp
             )}
           </div>
           {/* Links View list */}
-          <div className="mt-10 flex flex-col gap-5 w-full max-h-[300px] overflow-y-auto no-scrollbar pr-1">
+          <div className="mt-8 flex flex-col gap-5 w-full max-h-[300px] overflow-y-auto no-scrollbar pr-1">
             {links.length === 0 ? (
               Array.from({ length: 4 }).map((_, idx) => (
                 <div

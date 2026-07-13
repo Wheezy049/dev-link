@@ -1,5 +1,5 @@
 import { db } from "@/firebase/config";
-import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, query, setDoc, getDoc } from "firebase/firestore";
+import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, query, setDoc, getDoc, where, limit } from "firebase/firestore";
 
 export type Link = {
   id?: string;
@@ -13,6 +13,10 @@ export type UserProfile = {
   lastName: string;
   email: string;
   profileImage?: string;
+  username?: string;
+  bio?: string;
+  phoneNumber?: string;
+  description?: string;
 };
 
 export const createLink = async (link: { platform: string; url: string; userId: string }) => {
@@ -45,4 +49,21 @@ export const getUserProfile = async (userId: string): Promise<UserProfile | null
   const userDocRef = doc(db, "users", userId);
   const userDocSnap = await getDoc(userDocRef);
   return userDocSnap.exists() ? (userDocSnap.data() as UserProfile) : null;
+};
+
+export const getUserByUsername = async (username: string): Promise<{ uid: string; profile: UserProfile } | null> => {
+  const q = query(
+    collection(db, "users"),
+    where("username", "==", username.toLowerCase().trim()),
+    limit(1)
+  );
+  const querySnapshot = await getDocs(q);
+  if (!querySnapshot.empty) {
+    const docSnap = querySnapshot.docs[0];
+    return {
+      uid: docSnap.id,
+      profile: docSnap.data() as UserProfile,
+    };
+  }
+  return null;
 };
