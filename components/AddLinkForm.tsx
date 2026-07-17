@@ -8,11 +8,11 @@ interface AddLinkFormProps {
   link: Link;
   onChange: (updatedLink: Link) => void;
   onRemove: () => void;
-  onMoveUp?: () => void;
-  onMoveDown?: () => void;
+  onGripMouseDown: () => void;
+  onGripMouseUp: () => void;
 }
 
-const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: AddLinkFormProps) => {
+const AddLinkForm = ({ index, link, onChange, onRemove, onGripMouseDown, onGripMouseUp }: AddLinkFormProps) => {
   const [url, setUrl] = useState(link.url);
   const [platform, setPlatform] = useState(link.platform || "github");
   const [error, setError] = useState("");
@@ -72,33 +72,17 @@ const AddLinkForm = ({ index, link, onChange, onRemove, onMoveUp, onMoveDown }: 
     <div className="bg-[#FAFAFA] p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
       {/* Header Bar */}
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-bold text-[#737373] text-base flex items-center gap-2">
+        <h3 className="font-bold text-[#737373] text-base flex items-center gap-2 select-none">
           {/* Grip handle */}
-          <GripVertical size={16} className="text-[#737373] cursor-grab" />
+          <GripVertical
+            size={16}
+            className="text-[#737373] cursor-grab active:cursor-grabbing hover:text-[#633CFF] transition-colors"
+            onMouseDown={onGripMouseDown}
+            onMouseUp={onGripMouseUp}
+          />
           <span>Link #{index + 1}</span>
         </h3>
         <div className="flex items-center gap-2">
-          {onMoveUp && (
-            <button
-              type="button"
-              onClick={onMoveUp}
-              className="text-[#737373] hover:text-[#633CFF] hover:bg-gray-100 transition-all p-1.5 rounded"
-              title="Move Up"
-            >
-              <ChevronUp size={16} />
-            </button>
-          )}
-          {onMoveDown && (
-            <button
-              type="button"
-              onClick={onMoveDown}
-              className="text-[#737373] hover:text-[#633CFF] hover:bg-gray-100 transition-all p-1.5 rounded"
-              title="Move Down"
-            >
-              <ChevronDown size={16} />
-            </button>
-          )}
-          <span className="text-gray-300 mx-1">|</span>
           <button 
             type="button"
             onClick={onRemove} 

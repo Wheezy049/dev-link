@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { platforms } from "@/lib/platforms";
 import { ArrowRight } from "lucide-react";
 
@@ -24,14 +24,28 @@ interface PhoneMockupProps {
   links: Link[];
   savedName: SavedNameProps;
   image: string;
+  setLinks?: React.Dispatch<React.SetStateAction<Link[]>>;
 }
 
-export default function PhoneMockup({ links, savedName, image }: PhoneMockupProps) {
+export default function PhoneMockup({ links, setLinks, savedName, image }: PhoneMockupProps) {
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
+  const handleReorder = (fromIndex: number, toIndex: number) => {
+    if (!setLinks) return;
+    setLinks((prev) => {
+      const copy = [...prev];
+      const item = copy[fromIndex];
+      copy.splice(fromIndex, 1);
+      copy.splice(toIndex, 0, item);
+      return copy;
+    });
+  };
+
   return (
     <div className="hidden lg:flex justify-center items-center w-[560px] h-[834px] p-6 rounded-[24px] bg-white select-none">
       {/* Outer Phone Frame */}
       <div className="relative w-[340px] h-[631px] rounded-[40px] border border-[#737373] bg-white flex flex-col items-center p-6 overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-[#FAFAFA] border-b border-r border-l border-gray-200 rounded-b-xl z-20 flex items-center justify-center">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-[#FAFAFA] border-b border-r border-l border-gray-200 rounded-b-xl z-20 flex items-center justify-center">
           <div className="w-10 h-1 bg-gray-300 rounded-full"></div>
         </div>
         {/* Screen Scrollable View */}
@@ -98,10 +112,29 @@ export default function PhoneMockup({ links, savedName, image }: PhoneMockupProp
                     href={link.url || "#"}
                     target={link.url ? "_blank" : undefined}
                     rel="noopener noreferrer"
+                    draggable={!!setLinks}
+                    onDragStart={(e) => {
+                      if (!setLinks) return;
+                      setDraggedIndex(idx);
+                      e.dataTransfer.effectAllowed = "move";
+                    }}
+                    onDragEnd={() => setDraggedIndex(null)}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDragEnter={() => {
+                      if (setLinks && draggedIndex !== null && draggedIndex !== idx) {
+                        handleReorder(draggedIndex, idx);
+                        setDraggedIndex(idx);
+                      }
+                    }}
                     onClick={(e) => {
+                      if (setLinks) e.preventDefault();
                       if (!link.url) e.preventDefault();
                     }}
-                    className={`flex items-center justify-between px-4 py-3 h-11 w-full text-white text-xs font-semibold rounded-lg shadow-sm transition-all hover:opacity-90 active:scale-[0.98] ${config.bg}`}
+                    className={`flex items-center justify-between px-4 py-3 h-11 w-full text-white text-xs font-semibold rounded-lg shadow-sm transition-all hover:opacity-95 active:scale-[0.98] ${
+                      setLinks ? "cursor-grab active:cursor-grabbing" : ""
+                    } ${
+                      draggedIndex === idx ? "opacity-30 border border-dashed border-gray-400" : ""
+                    } ${config.bg}`}
                   >
                     <div className="flex items-center gap-2">
                       {config.icon}

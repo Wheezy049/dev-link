@@ -91,14 +91,36 @@ export default function ProfileEditor() {
   }, [profile]);
 
   return (
-    <div className="w-[343px] md:w-[721px] lg:w-[808px] min-h-[739px] p-8 md:p-10 rounded-[24px] bg-white flex flex-col justify-between">
+    <div className="w-[343px] md:w-[721px] lg:w-[808px] min-h-[739px] p-8 md:p-10 rounded-[24px] bg-white flex flex-col">
       <div>
-        <h1 className="text-2xl md:text-3xl text-[#333333] font-bold mb-2">
-          Profile Details
-        </h1>
-        <p className="text-base text-[#737373] mb-10">
-          Add your details to create a personal touch to your profile.
-        </p>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-2xl md:text-3xl text-[#333333] font-bold mb-2">
+              Profile Details
+            </h1>
+            <p className="text-base text-[#737373]">
+              Add your details to create a personal touch to your profile.
+            </p>
+          </div>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className={`w-full md:w-auto px-7 py-3 text-base font-semibold text-white bg-[#633CFF] rounded-lg transition-colors shrink-0 ${
+              saving
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-[#5733E5] hover:shadow-lg"
+            }`}
+          >
+            {saving ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                <span>Saving...</span>
+              </div>
+            ) : (
+              "Save"
+            )}
+          </button>
+        </div>
         {/* Profile Picture Upload Section */}
         <div className="bg-[#FAFAFA] p-6 rounded-xl mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
           <h2 className="text-[#737373] text-sm md:text-base w-full md:w-1/3">
@@ -253,30 +275,7 @@ export default function ProfileEditor() {
           </div>
         </div>
       </div>
-      {error && <p className="text-red-500 text-xs mt-3">{error}</p>}
-      <div>
-        <hr className="border-[#D9D9D9] my-6" />
-        <div className="flex justify-end">
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className={`px-7 py-3 text-base font-semibold text-white bg-[#633CFF] rounded-lg transition-colors ${
-              saving
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-[#5733E5] hover:shadow-lg"
-            }`}
-          >
-            {saving ? (
-              <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                <span>Saving...</span>
-              </div>
-            ) : (
-              "Save"
-            )}
-          </button>
-        </div>
-      </div>
+      {error && <p className="text-red-500 text-sm mt-3 text-right">{error}</p>}
     </div>
   );
 }

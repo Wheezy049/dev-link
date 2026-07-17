@@ -132,7 +132,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
       // Update or create remaining links
       const saveLinksPromises = activeLinks.map(async (link) => {
-        if (link.id) {
+        if (link.id && !link.id.startsWith("temp-")) {
           await updateLink(link.id, user.uid, { platform: link.platform, url: link.url });
           return link;
         } else {

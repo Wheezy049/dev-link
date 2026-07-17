@@ -9,7 +9,9 @@ import {
   FaDiscord, 
   FaSlack, 
   FaGitlab, 
-  FaDev 
+  FaDev,
+  FaGlobe,
+  FaMedium
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiHashnode } from "react-icons/si";
@@ -132,5 +134,23 @@ export const platforms: PlatformConfig[] = [
     pattern: /^https:\/\/([a-z0-9-]+\.)?hashnode\.dev\/.+$|^https:\/\/hashnode\.com\/@.+$/,
     placeholder: "https://hashnode.dev/@username",
     icon: <SiHashnode size={16} />
+  },
+  {
+    id: "portfolio",
+    name: "Portfolio",
+    color: "#633CFF",
+    bg: "bg-[#633CFF] hover:bg-[#5733E5] text-white",
+    pattern: /^https?:\/\/[^\s/$.?#].[^\s]*$/,
+    placeholder: "https://yourportfolio.com",
+    icon: <FaGlobe size={16} />
+  },
+  {
+    id: "medium",
+    name: "Medium",
+    color: "#000000",
+    bg: "bg-[#000000] hover:bg-[#1a1a1a] text-white border border-gray-700",
+    pattern: /^https:\/\/(www\.)?medium\.com\/.+$|^https:\/\/.+\.medium\.com\/.+$/,
+    placeholder: "https://medium.com/@username",
+    icon: <FaMedium size={16} />
   }
 ];

@@ -87,7 +87,7 @@ export default function PublicProfilePage() {
       <div className="absolute top-0 left-0 w-full h-[357px] bg-[#633CFF] rounded-b-[32px] -z-10 hidden md:block"></div>
       {/* Centered Preview Card */}
       <main className="flex justify-center items-center px-4 pt-6 md:pt-12">
-        <div className="bg-white rounded-3xl px-14 py-12 w-full max-w-[500px] flex flex-col items-center">
+        <div className="bg-white rounded-3xl px-6 py-12 w-full max-w-[500px] flex flex-col items-center">
           {/* Avatar Picture */}
           <div className="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center border-4 border-[#633CFF] mb-6 shadow-sm">
             {profile.profileImage ? (
